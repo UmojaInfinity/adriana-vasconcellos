@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta charset="utf-8">
+<title>Adriana Vasconcellos 15556</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;600;700;900&display=swap');
+
+  /* ---- Identidade Farol — Manual de Marca v1.0 (26/08/2026) ----
+     Paleta fixa da marca, não adaptativa a tema do sistema: é uma identidade
+     de campanha testada em WCAG 2.1, não um app com modo claro/escuro. */
+  :root{
+    --azul-noite:#0C1A2B;   /* fundo dominante — 62% */
+    --azul-medio:#1E3A5F;   /* faixa/bloco secundário — 18% */
+    --offwhite:#F5F1E8;     /* todo texto sobre azul — 12% */
+    --ambar:#E8A33D;        /* acento único — 6% */
+    --cinza:#8B9AA8;        /* contorno — 2% */
+    /* cinza puro como corpo de texto sobre azul médio mede 3.99:1 (abaixo do
+       AA de 4,5:1 pra texto normal — o próprio manual só aprova essa combinação
+       "grande, só título e número"). Esta mistura mede 5.47:1 sobre azul médio
+       e 8.33:1 sobre azul noite — texto de apoio pequeno em conformidade nos dois. */
+    --texto-apoio:color-mix(in srgb, var(--offwhite) 30%, var(--cinza) 70%);
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--azul-noite); color:var(--offwhite); font-family:'Inter',system-ui,sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  em{ font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--ambar); }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 clamp(20px,5vw,44px); width:100%; }
+  a{ color:inherit; }
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } html{ scroll-behavior:auto; } }
+
+  /* feixe de luz — o grafismo que dá nome ao sistema: gradiente radial do
+     canto superior direito, nunca espelhado, 17% de opacidade máxima. */
+  .backdrop{
+    position:fixed; inset:0; z-index:0; background:var(--azul-noite);
+    background-image: radial-gradient(circle at 88% 0%, rgba(232,163,61,.17), transparent 55%);
+  }
+
+  /* ---- top nav — sits above the stack, links scroll natively into each card ---- */
+  :root{ --nav-h:66px; }
+  header.site{
+    position:sticky; top:0; z-index:100; height:var(--nav-h); display:flex; align-items:center;
+  }
+  /* no background needed: every panel starts at top:var(--nav-h), so the header's own strip
+     always sits over the fixed dark backdrop, never over a card's own paint. */
+  .nav-row{ width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,44px); display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .brand{ font-family:'Fraunces',serif; font-weight:700; font-size:1rem; color:var(--offwhite); display:flex; align-items:center; gap:9px; text-decoration:none; cursor:pointer; }
+  .brand .num{ font-family:'Inter',sans-serif; font-weight:900; background:var(--ambar); color:var(--azul-noite); font-size:12px; padding:3px 8px; border-radius:5px; letter-spacing:.02em; }
+  nav.links{ display:flex; gap:20px; font-size:13.5px; font-weight:600; }
+  nav.links a{ color:color-mix(in srgb, var(--offwhite) 82%, transparent); text-decoration:none; }
+  nav.links a:hover{ color:var(--offwhite); }
+  @media (max-width:820px){ nav.links{ display:none; } }
+  .btn.nav-cta{ padding:9px 16px; font-size:13px; }
+
+  .panel{
+    position:sticky; top:var(--nav-h); scroll-margin-top:var(--nav-h); width:calc(100% - 80px); max-width:1160px; margin:0 auto;
+    min-height:calc(100svh - var(--nav-h)); display:flex; flex-direction:column; justify-content:center;
+    border-radius:26px; overflow:hidden; box-shadow:0 40px 90px rgba(0,0,0,.4);
+  }
+  /* only the LAST panel needs to genuinely release once scrolled past — it's the one right
+     before the footer, and the footer is truly transparent (shows the real fixed backdrop,
+     not a copy), so nothing can be left stuck behind it. Earlier panels keep the eternally-
+     stuck + z-index cover trick, which is what makes the stacking reveal between them work. */
+  .track-last{ position:relative; min-height:calc(100svh - var(--nav-h) + 38vh); }
+  /* first card matches the fixed backdrop exactly — it IS the background, not yet a card rising over it */
+  .panel-hero{ background:#CCC6C8 url('img/hero-bg-textura.jpg') center center / cover no-repeat; }
+  .hero-grid{
+    max-width:1160px; margin:0 auto; width:100%; padding-left:clamp(20px,5vw,44px);
+  }
+  .hero-text{ padding-top:clamp(40px,6vw,64px); padding-bottom:clamp(28px,4vw,40px); max-width:620px; }
+  .hero-text h1{ max-width:none; color:var(--azul-noite); }
+  .hero-text h1 em{ color:#7A4A12; }
+  .hero-text h1{ margin-bottom:92px; }
+  .hero-text h1 .linha-educ{ display:inline-block; position:relative; }
+  .hero-text h1 .linha-anti{ position:absolute; top:100%; right:0; white-space:nowrap; }
+  .hero-text h1 .linha-anti .ponto{ position:absolute; left:100%; }
+  .hero-text .lead{ margin-bottom:22px; color:#403B3D; }
+  .hero-text .eyebrow{ color:#403B3D; }
+  .hero-text .num-tag{ color:var(--azul-noite); border-color:var(--azul-medio); }
+  .hero-text .filete{ background:#7A4A12; }
+  /* topo, direita e base todos fixados ao painel ao mesmo tempo — a largura sobra livre,
+     calculada a partir da razão da imagem, então nunca distorce. */
+  .hero-photo{ position:absolute; top:138px; right:0; bottom:0; display:flex; }
+  .hero-photo img{ display:block; height:100%; width:auto; object-fit:contain; filter:drop-shadow(0 20px 30px rgba(0,0,0,.3)); }
+  @media (max-width:820px){
+    .hero-grid{ padding-right:clamp(20px,5vw,44px); }
+    .hero-photo{ position:static; margin:24px 0; display:flex; justify-content:center; }
+    .hero-photo img{ height:auto; width:auto; max-height:34vh; }
+    .hero-text{ padding-top:8px; }
+  }
+  .panel-noite{ background:#CCC6C8; }
+  .panel-noite h2{ color:var(--azul-noite); }
+  .panel-noite .eyebrow{ color:#403B3D; }
+  .panel-noite .filete{ background:#7A4A12; }
+  .panel-noite .pauta{ border-top-color:color-mix(in srgb, var(--azul-noite) 16%, transparent); }
+  .panel-noite .pauta:last-child{ border-bottom-color:color-mix(in srgb, var(--azul-noite) 16%, transparent); }
+  .panel-noite .pauta .i{ color:#7A4A12; }
+  .panel-noite .pauta h4{ color:var(--azul-noite); }
+  .panel-noite .pauta p{ color:#403B3D; }
+  .panel-noite .ajudar-list a, .panel-noite .imprensa-list a{ border-top-color:color-mix(in srgb, var(--azul-noite) 16%, transparent); }
+  .panel-noite .ajudar-list a:last-child, .panel-noite .imprensa-list a:last-child{ border-bottom-color:color-mix(in srgb, var(--azul-noite) 16%, transparent); }
+  .panel-noite .ajudar-list h4, .panel-noite .imprensa-list h4{ color:var(--azul-noite); }
+  .panel-noite .ajudar-list span, .panel-noite .imprensa-list span{ color:#403B3D; }
+  .panel-noite .arrow{ color:#7A4A12; }
+  .panel-medio{ background:var(--azul-medio); }
+  .panel .inner{ padding-top:clamp(56px,9vw,90px); padding-bottom:clamp(48px,7vw,74px); }
+
+  @media (max-width:640px){
+    /* mobile: half the outer gutter (backdrop showing on the sides), but keep a small
+       breathing gap between the card's own edge and the text inside it. */
+    .panel{ width:calc(100% - 40px); }
+    .wrap{ padding:0 16px; }
+  }
+
+  .eyebrow{ font-family:'Inter',sans-serif; font-weight:700; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--texto-apoio); margin-bottom:14px; }
+  /* filete — barra âmbar de 3px que abre o bloco de texto */
+  .filete{ width:44px; height:3px; background:var(--ambar); margin-bottom:14px; border-radius:2px; }
+  .num-tag{ font-family:'Inter',sans-serif; font-weight:700; font-size:13px; border:1px solid var(--cinza); color:var(--offwhite); padding:4px 11px; border-radius:20px; display:inline-block; margin-bottom:26px; }
+
+  h1,h2{ font-family:'Fraunces',serif; font-weight:700; line-height:1.04; letter-spacing:-0.005em; margin:0 0 22px; text-wrap:balance; color:var(--offwhite); }
+  h1{ font-size:clamp(2.3rem,6.4vw,4.2rem); max-width:15ch; }
+  h2{ font-size:clamp(1.9rem,4.6vw,3rem); max-width:15ch; }
+
+  p.lead{ font-family:'Inter'; font-size:clamp(1.02rem,1.6vw,1.2rem); max-width:46ch; color:var(--texto-apoio); margin:0 0 34px; }
+
+  .btn{ font-family:'Inter'; font-weight:700; font-size:15px; padding:14px 26px; border-radius:100px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; border:1.5px solid currentColor; }
+  .btn.solid{ background:var(--ambar); border-color:var(--ambar); color:var(--azul-noite); }
+
+  /* quem é — minimal credential list */
+  .cred-list{ margin-top:8px; max-width:52ch; }
+  .cred{ display:flex; gap:20px; padding:20px 0; border-top:1px solid color-mix(in srgb, var(--cinza) 30%, transparent); }
+  .cred:last-child{ border-bottom:1px solid color-mix(in srgb, var(--cinza) 30%, transparent); }
+  .cred .yr{ font-family:'Inter',sans-serif; font-weight:700; font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ambar); flex:none; width:78px; padding-top:3px; }
+  .cred p{ margin:0; font-size:.97rem; color:var(--texto-apoio); }
+  .cred strong{ color:var(--offwhite); font-weight:700; }
+
+  /* pautas — plain rows, no boxes */
+  .pauta-list{ margin-top:6px; }
+  .pauta{ display:grid; grid-template-columns:44px 1fr; gap:20px; padding:22px 0; border-top:1px solid color-mix(in srgb, var(--offwhite) 14%, transparent); align-items:baseline; }
+  .pauta:last-child{ border-bottom:1px solid color-mix(in srgb, var(--offwhite) 14%, transparent); }
+  .pauta .i{ font-family:'Inter',sans-serif; font-weight:900; font-size:13px; color:var(--ambar); }
+  .pauta h4{ font-family:'Inter'; font-weight:700; font-size:1.08rem; margin:0 0 4px; color:var(--offwhite); }
+  .pauta p{ margin:0; font-size:.92rem; color:var(--texto-apoio); max-width:48ch; }
+
+  /* propostas — numbered, plain */
+  .prop-list{ margin-top:6px; }
+  .prop-row{ padding:26px 0; border-top:1px solid color-mix(in srgb, var(--cinza) 30%, transparent); display:grid; grid-template-columns:60px 1fr; gap:20px; }
+  .prop-row:last-child{ border-bottom:1px solid color-mix(in srgb, var(--cinza) 30%, transparent); }
+  .prop-row .n{ font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:1.6rem; color:var(--ambar); }
+  .prop-row h4{ margin:0 0 6px; font-size:1.1rem; font-family:'Inter'; font-weight:700; color:var(--offwhite); }
+  .prop-row p{ margin:0; font-size:.92rem; color:var(--texto-apoio); max-width:54ch; }
+  .prop-row.soon p{ color:var(--texto-apoio); font-style:italic; }
+
+  /* ajudar — three plain links */
+  .ajudar-list a, .imprensa-list a{ display:flex; justify-content:space-between; align-items:center; gap:20px; padding:26px 0; border-top:1px solid color-mix(in srgb, var(--offwhite) 14%, transparent); text-decoration:none; color:inherit; }
+  .ajudar-list a:last-child, .imprensa-list a:last-child{ border-bottom:1px solid color-mix(in srgb, var(--offwhite) 14%, transparent); }
+  .ajudar-list h4, .imprensa-list h4{ font-family:'Inter'; font-weight:700; font-size:1.25rem; margin:0; color:var(--offwhite); }
+  .ajudar-list span, .imprensa-list span{ font-size:.85rem; color:var(--texto-apoio); }
+  .imprensa-list h4{ font-size:1.05rem; line-height:1.35; margin-bottom:4px; }
+  .arrow{ font-family:'Inter'; font-weight:700; font-size:18px; color:var(--ambar); }
+
+  footer{ position:relative; z-index:60; color:var(--offwhite); padding:44px 0 40px; background:transparent; }
+  footer p{ font-size:.82rem; margin:0 0 6px; font-family:'Inter'; font-weight:600; color:var(--offwhite); }
+  footer p:first-child{ letter-spacing:.02em; }
+  footer p:nth-of-type(2){ font-weight:400; color:var(--texto-apoio); }
+  footer .credit{ font-weight:400; color:var(--texto-apoio); }
+  footer a{ color:var(--ambar); text-decoration:none; font-weight:600; }
+  footer a:hover{ text-decoration:underline; }
+</style>
+</head>
+<body>
+
+
+<div class="backdrop"></div>
+
+<header class="site">
+  <div class="nav-row">
+    <a class="brand" href="#topo">Profa. Adriana <span class="num">15556</span></a>
+    <nav class="links">
+      <a href="#quem-e">Quem é</a>
+      <a href="#pautas">Pautas</a>
+      <a href="#propostas">Propostas</a>
+      <a href="#imprensa">Imprensa</a>
+      <a href="#ajudar">Como ajudar</a>
+    </nav>
+    <a class="btn solid nav-cta" href="#ajudar">Entrar no canal</a>
+  </div>
+</header>
+
+<div class="track-last">
+<section class="panel panel-hero" id="topo" style="z-index:1;">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <span class="num-tag">15556 · MDB</span>
+      <div class="filete"></div>
+      <div class="eyebrow">Deputada Estadual · São Paulo · Eleições 2026</div>
+      <h1>Professora Adriana explica o que é <em><span class="linha-educ">educação<span class="linha-anti">antirracista<span class="ponto">.</span></span></span></em></h1>
+      <p class="lead">Mais de vinte anos de sala de aula e um cargo de gestão em igualdade racial na Prefeitura de São Paulo — a mesma pauta, sustentada desde 2016.</p>
+      <div class="hero-photo">
+        <img src="img/adriana-hero.png" alt="Profa. Adriana Vasconcellos">
+      </div>
+      <a class="btn solid" href="#ajudar">Entrar no canal do WhatsApp</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="track-last">
+<section class="panel panel-medio" id="quem-e" style="z-index:2;">
+  <div class="wrap inner">
+    <div class="filete"></div>
+    <div class="eyebrow">Trajetória</div>
+    <h2>Quem é Adriana</h2>
+    <div class="cred-list">
+      <div class="cred"><span class="yr">Hoje</span><p><strong>Professora</strong> de Geografia e História da rede municipal de São Paulo há mais de vinte anos. Mestranda em Educação, PUC-SP.</p></div>
+      <div class="cred"><span class="yr">2025–26</span><p><strong>Coordenadora de Promoção da Igualdade Racial</strong>, Secretaria Municipal de Direitos Humanos e Cidadania. Saiu por desincompatibilização, pra concorrer.</p></div>
+      <div class="cred"><span class="yr">Biênio ant.</span><p>Presidiu o <strong>Conselho Municipal de Defesa e Promoção da Liberdade Religiosa</strong> (COMPLIR).</p></div>
+      <div class="cred"><span class="yr">2016–18</span><p>Vereadora (3º suplente, 5.239 votos) e assessora parlamentar na Câmara de SP; depois, deputada federal suplente, 20.144 votos.</p></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="track-last">
+<section class="panel panel-noite" id="pautas" style="z-index:3;">
+  <div class="wrap inner">
+    <div class="filete"></div>
+    <div class="eyebrow">Bandeiras</div>
+    <h2>As pautas</h2>
+    <div class="pauta-list">
+      <div class="pauta"><span class="i">01</span><div><h4>Educação antirracista</h4><p>Aplicação efetiva das Leis 10.639 e 11.645 — história e cultura afro-brasileira e indígena no currículo.</p></div></div>
+      <div class="pauta"><span class="i">02</span><div><h4>Mulheres negras e periféricas</h4><p>Feminicídio, saúde, creches pra mães em trabalho noturno, PCD e 60+, empreendedorismo.</p></div></div>
+      <div class="pauta"><span class="i">03</span><div><h4>Juventude negra e periférica</h4><p>Letalidade policial, esporte, arte e tecnologia.</p></div></div>
+      <div class="pauta"><span class="i">04</span><div><h4>Religiões de matriz africana</h4><p>Liberdade religiosa, cooperativismo e empreendedorismo religioso.</p></div></div>
+      <div class="pauta"><span class="i">05</span><div><h4>Periferia</h4><p>Economia solidária, moradia, mobilidade urbana.</p></div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="track-last">
+<section class="panel panel-medio" id="propostas" style="z-index:4;">
+  <div class="wrap inner">
+    <div class="filete"></div>
+    <div class="eyebrow">Pra Alesp</div>
+    <h2>Propostas</h2>
+    <div class="prop-list">
+      <div class="prop-row"><span class="n">01</span><div><h4>Fiscalização real das Leis 10.639 e 11.645</h4><p>Cumprimento cobrado no Projeto Político-Pedagógico de cada escola, com as Diretorias Regionais de Ensino fiscalizando — sem punir professor individualmente.</p></div></div>
+      <div class="prop-row"><span class="n">02</span><div><h4>Escola do Parlamento Cidadão</h4><p>Programa dentro da Alesp pra juventude e população aprenderem como funciona o legislativo.</p></div></div>
+      <div class="prop-row soon"><span class="n">···</span><div><h4>Mais 3 propostas</h4><p>a caminho — sabatina de produção em 27/08</p></div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="track-last">
+<section class="panel panel-noite" id="imprensa" style="z-index:5;">
+  <div class="wrap inner">
+    <div class="filete"></div>
+    <div class="eyebrow">Repercussão</div>
+    <h2>Imprensa</h2>
+    <div class="imprensa-list">
+      <a href="https://www.bra1.com.br/geral/id-685986/lei_antirracista_ainda_e_ignorada_nas_escolas_de_sao_paulo_apos_23_anos" target="_blank" rel="noopener">
+        <div><h4>Lei antirracista ainda é ignorada nas escolas de São Paulo após 23 anos</h4><span>BRA 1 · 28/08/2026</span></div>
+        <span class="arrow">↗</span>
+      </a>
+      <a href="https://www.abcdoabc.com.br/escolas-sp-aplicar-lei-antirracista-20-anos/" target="_blank" rel="noopener">
+        <div><h4>Escolas de SP falham ao aplicar lei antirracista há 20 anos</h4><span>ABC do ABC · 01/09/2026</span></div>
+        <span class="arrow">↗</span>
+      </a>
+      <a href="https://www.bra1.com.br/geral/id-687507/candidata_critica_falta_de_aplicacao_da_lei_que_obriga_ensino_de_historia_afro_brasileira_em_sao_paulo" target="_blank" rel="noopener">
+        <div><h4>Candidata critica falta de aplicação da lei que obriga ensino de história afro-brasileira em São Paulo</h4><span>BRA 1 · 01/09/2026</span></div>
+        <span class="arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="track-last">
+<section class="panel panel-medio" id="ajudar" style="z-index:6;">
+  <div class="wrap inner">
+    <div class="filete"></div>
+    <div class="eyebrow">Participe</div>
+    <h2>Como ajudar</h2>
+    <div class="ajudar-list">
+      <a href="#"><div><h4>Entrar no canal</h4><span>WhatsApp, sem grupo de discussão</span></div><span class="arrow">→</span></a>
+      <a href="#"><div><h4>Ser voluntária</h4><span>nome, WhatsApp e bairro</span></div><span class="arrow">→</span></a>
+      <a href="#"><div><h4>Doar</h4><span>via plataforma homologada pelo TSE</span></div><span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>PROFA. ADRIANA VASCONCELLOS · MDB · 15556 · DEPUTADA ESTADUAL — SP · ELEIÇÕES 2026</p>
+    <p>Direção de layout — versão de demonstração, 25/08/2026.</p>
+    <p class="credit">Produzido por <a href="https://www.umojainfinity.com.br" target="_blank" rel="noopener">Umoja Infinity</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var header = document.querySelector('header.site');
+  var navH = header ? header.offsetHeight : 0;
+  var offsets = {};
+  document.querySelectorAll('.panel[id]').forEach(function(el){
+    offsets[el.id] = el.getBoundingClientRect().top + window.scrollY;
+  });
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function easeInOutQuad(t){ return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
+
+  function animateScrollTo(target, duration){
+    var start = window.scrollY;
+    var distance = target - start;
+    if (reduceMotion || Math.abs(distance) < 1){ window.scrollTo(0, target); return; }
+    var startTime = null;
+    function step(ts){
+      if (startTime === null) startTime = ts;
+      var elapsed = ts - startTime;
+      var t = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, start + distance * easeInOutQuad(t));
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      if(Object.prototype.hasOwnProperty.call(offsets, id)){
+        e.preventDefault();
+        var target = Math.max(0, offsets[id] - navH);
+        var distance = Math.abs(target - window.scrollY);
+        var duration = Math.min(1100, Math.max(320, distance * 0.45));
+        animateScrollTo(target, duration);
+      }
+    });
+  });
+})();
+</script>
+
+<div class="preview-banner" style="position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#000;color:#fff;font:600 12px/1.4 -apple-system,sans-serif;text-align:center;padding:8px 12px;letter-spacing:.02em;">
+PRÉVIA DE DESENVOLVIMENTO — não é o site oficial da campanha — conteúdo parcial, sujeito a alteração
+</div>
+</body>
+</html>
