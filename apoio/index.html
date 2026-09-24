@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moldura de Apoio — Profa. Adriana 15 556</title>
+<meta name="description" content="Coloque a moldura de apoio na sua foto de perfil. Grátis, direto do navegador — sua foto não sai do seu aparelho.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* ---- Identidade Farol ---- */
+  :root {
+    --azul-noite: #0c1a2b;
+    --azul-medio: #1e3a5f;
+    --offwhite: #f5f1e8;
+    --ambar: #e8a33d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--azul-noite);
+    color: var(--offwhite);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header {
+    text-align: center;
+    padding: 40px 16px 8px;
+  }
+  header .apoio {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--ambar);
+    font-weight: 600;
+  }
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 6vw, 44px);
+    margin-top: 6px;
+  }
+  header p {
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgba(245, 241, 232, .75);
+    max-width: 420px;
+  }
+  main {
+    width: 100%;
+    max-width: 460px;
+    padding: 24px 16px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .passo {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ambar);
+    font-weight: 600;
+    align-self: flex-start;
+  }
+  /* botão principal */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-ambar { background: var(--ambar); color: var(--azul-noite); }
+  .btn-vazado {
+    background: transparent;
+    color: var(--offwhite);
+    border: 2px solid rgba(245, 241, 232, .35);
+  }
+  .btn[disabled] { opacity: .4; cursor: not-allowed; }
+  /* editor */
+  #areaEditor { display: none; width: 100%; flex-direction: column; gap: 18px; align-items: center; }
+  #areaEditor.ativo { display: flex; }
+  .palco {
+    position: relative;
+    width: min(88vw, 400px);
+  }
+  canvas#palco {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    touch-action: none;
+    cursor: grab;
+  }
+  canvas#palco.arrastando { cursor: grabbing; }
+  .dica {
+    font-size: 13px;
+    color: rgba(245, 241, 232, .6);
+    text-align: center;
+  }
+  /* zoom */
+  .linha-zoom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 340px;
+  }
+  .linha-zoom span { font-size: 18px; color: var(--ambar); user-select: none; }
+  input[type=range] {
+    flex: 1;
+    accent-color: var(--ambar);
+    height: 32px;
+  }
+  /* formato */
+  .formatos {
+    display: flex;
+    gap: 8px;
+    background: rgba(245, 241, 232, .08);
+    border-radius: 999px;
+    padding: 5px;
+  }
+  .formatos button {
+    border: none;
+    background: transparent;
+    color: rgba(245, 241, 232, .7);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .formatos button.ativo {
+    background: var(--ambar);
+    color: var(--azul-noite);
+  }
+  /* etapa de contato (opcional) */
+  .bloco-contato {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bloco-contato .opcional {
+    font-size: 13px;
+    color: rgba(245, 241, 232, .6);
+    margin-top: -6px;
+  }
+  .campo {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 2px solid rgba(245, 241, 232, .22);
+    background: rgba(245, 241, 232, .06);
+    color: var(--offwhite);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+  }
+  .campo::placeholder { color: rgba(245, 241, 232, .45); }
+  .campo:focus { outline: none; border-color: var(--ambar); }
+  .linha-consentimento {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(245, 241, 232, .85);
+    cursor: pointer;
+  }
+  .linha-consentimento input {
+    accent-color: var(--ambar);
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  footer {
+    margin-top: auto;
+    padding: 24px 16px 36px;
+    text-align: center;
+    font-size: 12.5px;
+    color: rgba(245, 241, 232, .5);
+    line-height: 1.7;
+    max-width: 420px;
+  }
+  footer .privacidade { color: rgba(245, 241, 232, .75); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="apoio">Eu apoio</div>
+  <h1>Profa. Adriana</h1>
+  <p>Coloque a moldura da campanha na sua foto de perfil em três toques. Funciona para WhatsApp, Instagram e Facebook.</p>
+</header>
+
+<main>
+  <div id="areaInicio" style="width:100%; display:flex; flex-direction:column; gap:14px;">
+    <div class="passo">Passo 1 · Sua foto</div>
+    <button class="btn btn-ambar" id="btnEscolher">📷 Escolher minha foto</button>
+    <input type="file" id="inputFoto" accept="image/*" hidden>
+  </div>
+
+  <div id="areaEditor">
+    <div class="passo">Passo 2 · Ajuste o enquadramento</div>
+    <div class="palco">
+      <canvas id="palco" width="1080" height="1080"></canvas>
+    </div>
+    <p class="dica">Arraste a foto para posicionar · use o controle para aproximar</p>
+    <div class="linha-zoom">
+      <span>−</span>
+      <input type="range" id="zoom" min="100" max="300" value="100" aria-label="Zoom da foto">
+      <span>+</span>
+    </div>
+
+    <div class="bloco-contato" style="margin-top:8px">
+      <div class="passo">Passo 3 · Caminhe com a gente</div>
+      <p class="opcional">Se quiser, deixe seu contato para receber novidades da campanha. É opcional — a moldura sai do mesmo jeito.</p>
+      <input class="campo" type="text" id="ctNome" placeholder="Seu nome" autocomplete="name">
+      <input class="campo" type="email" id="ctEmail" placeholder="Seu e-mail" autocomplete="email" inputmode="email">
+      <input class="campo" type="tel" id="ctTelefone" placeholder="Seu WhatsApp (com DDD)" autocomplete="tel" inputmode="tel">
+      <label class="linha-consentimento">
+        <input type="checkbox" id="ctAceita">
+        <span>Autorizo a campanha da Profa. Adriana a entrar em contato comigo por e-mail ou WhatsApp. Seus dados só são guardados se esta caixa estiver marcada.</span>
+      </label>
+    </div>
+
+    <div class="passo" style="margin-top:8px">Passo 4 · Baixe e use</div>
+    <div class="formatos" role="tablist">
+      <button id="fmtPerfil" class="ativo">Perfil</button>
+      <button id="fmtPost">Postagem</button>
+      <button id="fmtStories">Stories</button>
+    </div>
+    <button class="btn btn-ambar" id="btnBaixar">⬇️ Baixar imagem</button>
+    <button class="btn btn-vazado" id="btnTrocar">Trocar a foto</button>
+  </div>
+</main>
+
+<footer>
+  <span class="privacidade">🔒 Sua foto não sai do seu aparelho:</span> a montagem acontece
+  aqui mesmo, no seu navegador. Nada é enviado ou armazenado.<br>
+  Apoio voluntário e gratuito de apoiadores. Identidade Farol · Profa. Adriana 15 556.
+</footer>
+
+<script>
+/* ===== Identidade Farol (mesmos valores do gerar_moldura.py, escala 800→1080) ===== */
+const COR = {
+  azulNoite: '#0c1a2b',
+  azulMedio: '#1e3a5f',
+  offwhite:  '#f5f1e8',
+  ambar:     '#e8a33d',
+};
+const NUMERO = '15 556';
+const NUMERO_PERFIL = '15556'; // sem espaço: legível até nos 110px do perfil
+const NOME_CURTO = 'ADRIANA';
+
+const PERFIL  = { w: 1080, h: 1080, cx: 540, cy: 540, raio: 500 };
+const POST    = { w: 1080, h: 1350 };            // feed 4:5 (retrato)
+const STORIES = { w: 1080, h: 1920, cx: 540, cy: 700, raio: 420 };
+
+const ANEL = 19;      // espessura do anel âmbar (14 na base 800)
+const FILETE = 4;     // filete offwhite interno (3 na base 800)
+
+/* ===== Estado ===== */
+let foto = null;              // HTMLImageElement
+let zoom = 1;                 // 1..3
+let panX = 0, panY = 0;       // deslocamento em fração do raio do círculo
+let formato = 'perfil';
+
+const palco = document.getElementById('palco');
+const ctx = palco.getContext('2d');
+
+/* ===== Desenho ===== */
+function desenharFotoNoCirculo(c, g, spec, rFoto) {
+  const r = rFoto || spec.raio - ANEL - FILETE;
+  g.save();
+  g.beginPath();
+  g.arc(spec.cx, spec.cy, r, 0, Math.PI * 2);
+  g.clip();
+
+  // escala mínima: a foto sempre cobre o círculo
+  const lado = 2 * r;
+  const s0 = lado / Math.min(foto.width, foto.height);
+  const s = s0 * zoom;
+  const dw = foto.width * s, dh = foto.height * s;
+
+  // limita o pan para nunca mostrar borda vazia
+  const maxX = Math.max(0, (dw - lado) / 2);
+  const maxY = Math.max(0, (dh - lado) / 2);
+  const dx = Math.max(-maxX, Math.min(maxX, panX * r));
+  const dy = Math.max(-maxY, Math.min(maxY, panY * r));
+
+  g.drawImage(foto, spec.cx - dw / 2 + dx, spec.cy - dh / 2 + dy, dw, dh);
+  g.restore();
+}
+
+function desenharAnel(g, spec) {
+  // anel âmbar
+  g.beginPath();
+  g.arc(spec.cx, spec.cy, spec.raio - ANEL / 2, 0, Math.PI * 2);
+  g.strokeStyle = COR.ambar;
+  g.lineWidth = ANEL;
+  g.stroke();
+  // filete offwhite interno (acabamento premium)
+  g.beginPath();
+  g.arc(spec.cx, spec.cy, spec.raio - ANEL - FILETE / 2, 0, Math.PI * 2);
+  g.strokeStyle = COR.offwhite;
+  g.lineWidth = FILETE;
+  g.stroke();
+}
+
+function selo(g, cx, cy, escala = 1, comNome = true) {
+  const fNum = Math.round(62 * escala);
+  const fNome = Math.round(27 * escala);
+  g.font = `700 ${fNum}px Fraunces, serif`;
+  const wNum = g.measureText(NUMERO).width;
+  g.font = `400 ${fNome}px Inter, sans-serif`;
+  const wNome = g.measureText(NOME_CURTO).width;
+
+  const largura = (comNome ? Math.max(wNum, wNome) : wNum) + 86 * escala;
+  const altura = (comNome ? 146 : 108) * escala;
+  const x0 = cx - largura / 2, y0 = cy - altura / 2;
+
+  g.beginPath();
+  g.roundRect(x0, y0, largura, altura, altura / 2);
+  g.fillStyle = COR.azulNoite;
+  g.fill();
+  g.strokeStyle = COR.ambar;
+  g.lineWidth = 4 * escala;
+  g.stroke();
+
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.font = `700 ${fNum}px Fraunces, serif`;
+  g.fillStyle = COR.ambar;
+  g.fillText(NUMERO, cx, comNome ? cy - 21 * escala : cy + 2 * escala);
+  if (comNome) {
+    g.font = `400 ${fNome}px Inter, sans-serif`;
+    g.fillStyle = COR.offwhite;
+    g.fillText(NOME_CURTO, cx, cy + 33 * escala);
+  }
+}
+
+function desenharSeloNaBase(g, spec) {
+  const cy = spec.cy + spec.raio - ANEL - 73 + 8; // ancorado na base do círculo
+  selo(g, spec.cx, cy, 1);
+}
+
+/* Modelo padrão da foto de perfil (aprovado pelo Helan em 2026-09-24):
+   faixa âmbar sólida na base do círculo com o número 15556 grande em
+   azul-noite, e anel âmbar fino — desenhado para ficar legível até no
+   tamanho real de 110px do avatar do Instagram. */
+function renderPerfil(c) {
+  const g = c.getContext('2d');
+  const { cx, cy, raio } = PERFIL;
+  const borda = 10;               // anel fino externo
+  g.clearRect(0, 0, c.width, c.height);
+  // fundo azul-noite (evita canto transparente virar preto/branco em apps)
+  g.fillStyle = COR.azulNoite;
+  g.fillRect(0, 0, c.width, c.height);
+
+  // foto ocupando o círculo quase todo
+  desenharFotoNoCirculo(c, g, PERFIL, raio - borda);
+
+  // faixa âmbar sólida na base (segmento do círculo)
+  g.save();
+  g.beginPath();
+  g.arc(cx, cy, raio - borda, 0, Math.PI * 2);
+  g.clip();
+  g.fillStyle = COR.ambar;
+  g.fillRect(cx - raio, cy + raio * 0.35, raio * 2, raio);
+  g.restore();
+
+  // número grande, no peso máximo, centralizado na faixa
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.font = '800 205px Inter, sans-serif';
+  g.fillStyle = COR.azulNoite;
+  g.fillText(NUMERO_PERFIL, cx, cy + raio * 0.655);
+
+  // anel âmbar fino contornando tudo
+  g.beginPath();
+  g.arc(cx, cy, raio - borda / 2, 0, Math.PI * 2);
+  g.strokeStyle = COR.ambar;
+  g.lineWidth = borda;
+  g.stroke();
+}
+
+function desenharFotoCobrindo(g, w, h) {
+  // foto cobre o retângulo todo, com pan/zoom do usuário
+  const s0 = Math.max(w / foto.width, h / foto.height);
+  const s = s0 * zoom;
+  const dw = foto.width * s, dh = foto.height * s;
+  const ref = Math.min(w, h) / 2; // pan normalizado pela metade do menor lado
+  const maxX = Math.max(0, (dw - w) / 2);
+  const maxY = Math.max(0, (dh - h) / 2);
+  const dx = Math.max(-maxX, Math.min(maxX, panX * ref));
+  const dy = Math.max(-maxY, Math.min(maxY, panY * ref));
+  g.drawImage(foto, w / 2 - dw / 2 + dx, h / 2 - dh / 2 + dy, dw, dh);
+}
+
+function renderPost(c) {
+  const g = c.getContext('2d');
+  const { w, h } = POST;
+  g.clearRect(0, 0, w, h);
+  desenharFotoCobrindo(g, w, h);
+
+  // véu azul-noite na base, para o texto respirar
+  const grad = g.createLinearGradient(0, 820, 0, h);
+  grad.addColorStop(0, 'rgba(12,26,43,0)');
+  grad.addColorStop(1, 'rgba(12,26,43,.94)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, w, h);
+
+  // borda âmbar + filete offwhite (mesmo acabamento do anel)
+  g.strokeStyle = COR.ambar;
+  g.lineWidth = ANEL;
+  g.strokeRect(ANEL / 2, ANEL / 2, w - ANEL, h - ANEL);
+  g.strokeStyle = COR.offwhite;
+  g.lineWidth = FILETE;
+  g.strokeRect(ANEL + FILETE / 2, ANEL + FILETE / 2, w - 2 * ANEL - FILETE, h - 2 * ANEL - FILETE);
+
+  // selo do número no canto superior direito
+  selo(g, 870, 140, 0.9, false);
+
+  // assinatura na base
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.font = '600 40px Inter, sans-serif';
+  g.fillStyle = COR.offwhite;
+  g.fillText('E U   A P O I O', 540, 1130);
+  g.font = '700 104px Fraunces, serif';
+  g.fillStyle = COR.ambar;
+  g.fillText('Profa. Adriana', 540, 1230);
+}
+
+function renderStories(c) {
+  const g = c.getContext('2d');
+  g.clearRect(0, 0, c.width, c.height);
+  // fundo com brilho sutil (farol)
+  g.fillStyle = COR.azulNoite;
+  g.fillRect(0, 0, c.width, c.height);
+  const grad = g.createRadialGradient(540, 700, 100, 540, 700, 1100);
+  grad.addColorStop(0, 'rgba(30,58,95,.9)');
+  grad.addColorStop(1, 'rgba(12,26,43,0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, c.width, c.height);
+
+  desenharFotoNoCirculo(c, g, STORIES);
+  desenharAnel(g, STORIES);
+
+  g.textAlign = 'center';
+  // "EU APOIO"
+  g.font = '600 44px Inter, sans-serif';
+  g.fillStyle = COR.offwhite;
+  const espacado = 'E U   A P O I O';
+  g.fillText(espacado, 540, 1300);
+  // nome
+  g.font = '700 118px Fraunces, serif';
+  g.fillStyle = COR.ambar;
+  g.fillText('Profa. Adriana', 540, 1435);
+  // selo do número (sem repetir o nome, que já está acima)
+  selo(g, 540, 1590, 1.1, false);
+}
+
+const FORMATOS = {
+  perfil:  { spec: PERFIL,  render: renderPerfil,  arquivo: 'moldura-adriana-perfil.png' },
+  post:    { spec: POST,    render: renderPost,    arquivo: 'moldura-adriana-postagem.png' },
+  stories: { spec: STORIES, render: renderStories, arquivo: 'moldura-adriana-stories.png' },
+};
+
+function refDePan(f) {
+  // valor que normaliza o arrasto: raio da foto (círculo) ou metade do menor lado (retângulo)
+  const spec = FORMATOS[f].spec;
+  return spec.raio ? spec.raio - ANEL - FILETE : Math.min(spec.w, spec.h) / 2;
+}
+
+function render() {
+  if (!foto) return;
+  const { spec, render: fn } = FORMATOS[formato];
+  if (palco.width !== spec.w || palco.height !== spec.h) { palco.width = spec.w; palco.height = spec.h; }
+  fn(palco);
+}
+
+/* ===== Carregar foto ===== */
+const inputFoto = document.getElementById('inputFoto');
+document.getElementById('btnEscolher').addEventListener('click', () => inputFoto.click());
+document.getElementById('btnTrocar').addEventListener('click', () => inputFoto.click());
+
+inputFoto.addEventListener('change', () => {
+  const arquivo = inputFoto.files && inputFoto.files[0];
+  if (!arquivo) return;
+  const url = URL.createObjectURL(arquivo);
+  carregarFoto(url);
+  inputFoto.value = ''; // permite escolher o mesmo arquivo de novo
+});
+
+// arrastar e soltar uma imagem em qualquer lugar da página (desktop)
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  const arquivo = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (arquivo && arquivo.type.startsWith('image/')) {
+    carregarFoto(URL.createObjectURL(arquivo));
+  }
+});
+
+function carregarFoto(url) {
+  const img = new Image();
+  img.onload = () => {
+    foto = img;
+    zoom = 1; panX = 0; panY = 0;
+    document.getElementById('zoom').value = 100;
+    // o Passo 1 continua visível (vira "trocar"), para o botão de upload nunca sumir
+    document.getElementById('btnEscolher').textContent = '📷 Escolher outra foto';
+    document.getElementById('areaEditor').classList.add('ativo');
+    document.fonts.ready.then(render);
+    render();
+  };
+  img.src = url;
+}
+// gancho de teste (usado só em desenvolvimento)
+window.__setFotoTeste = carregarFoto;
+
+/* ===== Pan (arrastar) ===== */
+let arrastando = false, ultimoX = 0, ultimoY = 0;
+palco.addEventListener('pointerdown', e => {
+  if (!foto) return;
+  arrastando = true;
+  ultimoX = e.clientX; ultimoY = e.clientY;
+  palco.classList.add('arrastando');
+  palco.setPointerCapture(e.pointerId);
+});
+palco.addEventListener('pointermove', e => {
+  if (!arrastando) return;
+  const spec = FORMATOS[formato].spec;
+  const escalaTela = palco.clientWidth / spec.w; // px de tela → px de canvas
+  const r = refDePan(formato);
+  panX += (e.clientX - ultimoX) / escalaTela / r;
+  panY += (e.clientY - ultimoY) / escalaTela / r;
+  ultimoX = e.clientX; ultimoY = e.clientY;
+  render();
+});
+['pointerup', 'pointercancel'].forEach(ev => palco.addEventListener(ev, () => {
+  arrastando = false;
+  palco.classList.remove('arrastando');
+}));
+
+/* ===== Zoom ===== */
+document.getElementById('zoom').addEventListener('input', e => {
+  zoom = e.target.value / 100;
+  render();
+});
+
+/* ===== Formato ===== */
+const botoesFormato = {
+  perfil: document.getElementById('fmtPerfil'),
+  post: document.getElementById('fmtPost'),
+  stories: document.getElementById('fmtStories'),
+};
+function setFormato(f) {
+  formato = f;
+  for (const [nome, btn] of Object.entries(botoesFormato)) {
+    btn.classList.toggle('ativo', nome === f);
+  }
+  render();
+}
+for (const nome of Object.keys(botoesFormato)) {
+  botoesFormato[nome].addEventListener('click', () => setFormato(nome));
+}
+
+/* ===== Coleta de contato (opcional, LGPD) =====
+   Só envia se a caixa de autorização estiver marcada E algum campo
+   estiver preenchido. Nunca bloqueia o download da moldura.
+   Destino: Google Sheets da campanha, via Apps Script publicado como
+   app da web (ver apps-script-coleta.gs e o README desta pasta).
+   Enquanto ENDPOINT_APOIADORES estiver vazio, nada é enviado. */
+const ENDPOINT_APOIADORES = ''; // colar aqui a URL /exec do Apps Script
+let contatoEnviado = false;
+
+function enviarContatoSeAutorizado() {
+  try {
+    if (contatoEnviado || !document.getElementById('ctAceita').checked) return;
+    const nome = document.getElementById('ctNome').value.trim();
+    const email = document.getElementById('ctEmail').value.trim();
+    const telefone = document.getElementById('ctTelefone').value.trim();
+    if (!nome && !email && !telefone) return;
+    if (!ENDPOINT_APOIADORES) return;
+    // no-cors + text/plain: o Apps Script não devolve cabeçalhos CORS,
+    // então enviamos "às cegas" (sem ler a resposta) e sem preflight.
+    fetch(ENDPOINT_APOIADORES, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        nome, email, telefone,
+        aceita_contato: true,
+        origem: 'pagina-apoio',
+        quando: new Date().toISOString(),
+      }),
+      keepalive: true,
+    }).catch(() => {}); // falha de rede nunca atrapalha o apoiador
+    contatoEnviado = true;
+  } catch (_) { /* coleta é cortesia; o download segue sempre */ }
+}
+
+/* ===== Download ===== */
+document.getElementById('btnBaixar').addEventListener('click', () => {
+  if (!foto) return;
+  enviarContatoSeAutorizado();
+  palco.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = FORMATOS[formato].arquivo;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }, 'image/png');
+});
+</script>
+</body>
+</html>
