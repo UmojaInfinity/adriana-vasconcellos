@@ -588,7 +588,7 @@ for (const nome of Object.keys(botoesFormato)) {
    Destino: Google Sheets da campanha, via Apps Script publicado como
    app da web (ver apps-script-coleta.gs e o README desta pasta).
    Enquanto ENDPOINT_APOIADORES estiver vazio, nada é enviado. */
-const ENDPOINT_APOIADORES = ''; // colar aqui a URL /exec do Apps Script
+const ENDPOINT_APOIADORES = 'https://script.google.com/macros/s/AKfycbzItNMeKt7W0_cMwF69JVLig_koU4wraZsurI4l7edvXGa7N-XIrqHCa1OO4g63OEnuoQ/exec';
 let contatoEnviado = false;
 
 function enviarContatoSeAutorizado() {
